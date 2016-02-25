@@ -1,4 +1,4 @@
-% function[per,time]=perceptron(T)
+ % function[per,time]=perceptron(T)
 %% Initialization
 load data;
 fea=full(fea);
