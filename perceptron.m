@@ -1,4 +1,5 @@
- % function[per,time]=perceptron(T)
+%% Perceptron Algorithm
+% function[per,time]=perceptron(T)
 %% Initialization
 load data;
 count=0; per=0;
@@ -19,37 +20,37 @@ b=0; output=[];
 wb=1; idx=1;
 for l=0.1:0.1:0.1 %Learnig Rate
     tic;
-%% Learning
-for T=1:1000 % Number of iterations to convergence
-    
-for i=1:size(train,1)
-
-    if(labeltr(i,1)*(w*train(i,:)'+b)<=0)
-        w=w+l*(labeltr(i,1)*train(i,:));
-        b=b+labeltr(i,1);
+    %% Learning
+    for T=1:1000 % Number of iterations to convergence
+        
+        for i=1:size(train,1)
+            
+            if(labeltr(i,1)*(w*train(i,:)'+b)<=0)
+                w=w+l*(labeltr(i,1)*train(i,:));
+                b=b+labeltr(i,1);
+            end
+        end
+        t=toc;
+        %% Classification
+        for i=1:size(test,1)
+            if(w*(test(i,:))'+b>=0)
+                outlabel(i,1)=1;
+            else
+                outlabel(i,1)=-1;
+            end
+        end
+        %% Accuracy
+        for i=1:length(labelte)
+            if(outlabel(i,1)==labelte(i,1))
+                count=count+1;
+            end
+        end
+        per(T,2)=count/length(labelte)*100;
+        count=0;
     end
-end
-t=toc;
-%% Classification
-for i=1:size(test,1)
-    if(w*(test(i,:))'+b>=0)
-        outlabel(i,1)=1;
-    else
-        outlabel(i,1)=-1;
-    end
-end
-%% Accuracy
-for i=1:length(labelte)
-    if(outlabel(i,1)==labelte(i,1))
-        count=count+1;
-    end
-end
-per(T,2)=count/length(labelte)*100;
-count=0;
-end
-%% Analysis
-valper=max(per(:,2));
-valtime=toc; % Time for each value of learning rate
-output=[output;l,valtime,valper];
+    %% Analysis
+    valper=max(per(:,2));
+    valtime=toc; % Time for each value of learning rate
+    output=[output;l,valtime,valper];
 end
 % end
