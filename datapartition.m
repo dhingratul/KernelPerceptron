@@ -1,3 +1,7 @@
+%% Partitions the data into shuffled training and testing dataset
+% Input: features, labels, split for training
+% Outout: Train, Test, Train Labels, Test Labels
+% Run from perceptron.m
 function [train, test, labeltr, labelte]=datapartition(features, labels, split_tr)
         features=full(features);
 %% Random samples        
